@@ -1,0 +1,30 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Data
+categories = ['Simple1', 'Optimized1', 'Simple2', 'Optimized2']
+clocks_data = [3244037, 429296, 2006021, 392601]
+
+# Separate the data for each group
+simple_data = clocks_data[0::2]
+optimized_data = clocks_data[1::2]
+
+# Plotting
+fig, ax = plt.subplots()
+
+bar_width = 0.35
+index = np.arange(len(categories))
+
+bar1 = ax.bar(index, simple_data, bar_width, label='Simple', alpha=0.8)
+bar2 = ax.bar(index + bar_width, optimized_data, bar_width, label='Optimized', alpha=0.8)
+
+# Adding labels
+ax.set_xlabel('Clocks')
+ax.set_ylabel('Values')
+ax.set_title('Comparison of Simple and Optimized Clocks')
+ax.set_xticks(index + bar_width/2)
+ax.set_xticklabels(categories)
+ax.legend()
+
+# Show the plot
+plt.show()

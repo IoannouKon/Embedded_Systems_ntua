@@ -1,0 +1,66 @@
+#include <math.h>
+
+#include "calcDist.h"
+
+	float data_hw_tmp1[MOVIES_NUM/2][USERS_NUM],data_hw_tmp2[MOVIES_NUM/2][USERS_NUM];
+	float movie_tmp1[USERS_NUM],movie_tmp2[USERS_NUM];
+	float dists_hw_tmp1[MOVIES_NUM],dists_hw_tmp2[MOVIES_NUM];
+
+	void COMPUTE_DISTS()
+	{
+		#pragma HLS DATAFLOW
+
+		COMPUTE_DISTS_1:
+			for (int i = 0; i < MOVIES_NUM/2; i++) {
+				float sum1 = 0.0, diff1 = 0.0;
+				for (int j = 0; j < USERS_NUM; j++){
+					diff1 = data_hw_tmp1[i][j] - movie_tmp1[j];
+					sum1 += diff1 * diff1;
+				}
+				dists_hw_tmp1[i] = sqrt(sum1);
+			}
+
+		COMPUTE_DISTS_2:
+			for (int i = MOVIES_NUM/2; i < MOVIES_NUM; i++) {
+				float sum2 = 0.0, diff2 = 0.0;
+				for (int j = 0; j < USERS_NUM; j++){
+					diff2 = data_hw_tmp2[i][j] - movie_tmp2[j];
+					sum2 += diff2 * diff2;
+				}
+				dists_hw_tmp2[i] = sqrt(sum2);
+			}
+	}
+
+void calcDistancesHW(float* data_hw, float* dists_hw)
+{
+
+
+LOAD_DATA_HW_TMP_1:
+for (int i = 0; i < MOVIES_NUM / 2; i++) {
+    for (int j = 0; j < USERS_NUM; j++) {
+        data_hw_tmp1[i][j] = data_hw[i * USERS_NUM + j];
+    }
+}
+LOAD_DATA_HW_TMP_2:
+for (int i = MOVIES_NUM / 2; i < MOVIES_NUM; i++) {
+    for (int j = 0; j < USERS_NUM; j++) {
+        data_hw_tmp2[i - MOVIES_NUM / 2][j] = data_hw[i * USERS_NUM + j];
+    }
+}
+
+LOAD_MOVIE_TMP:
+	for (int i = 0; i < USERS_NUM; i++){
+		movie_tmp1[i] = data_hw[MOVIE_ID * USERS_NUM + i];
+		movie_tmp2[i] = movie_tmp1[i];
+	}
+	COMPUTE_DISTS();
+
+WRITE_DISTS_1:
+for (int i = 0; i < MOVIES_NUM / 2; i++) {
+    dists_hw[i] = dists_hw_tmp1[i];
+}
+WRITE_DISTS_2:
+for (int i = MOVIES_NUM / 2; i < MOVIES_NUM; i++) {
+    dists_hw[i] = dists_hw_tmp2[i - MOVIES_NUM / 2];
+}
+}
