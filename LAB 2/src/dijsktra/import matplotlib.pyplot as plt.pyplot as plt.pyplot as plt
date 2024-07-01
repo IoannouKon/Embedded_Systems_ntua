@@ -1,0 +1,135 @@
+import matplotlib.pyplot as plt
+
+# Data
+cores = [1, 2, 4, 8, 16, 32, 64]
+nosync_lock = [0.9959, 0.6030, 0.3614, 0.2887, 0.7271, 1.1632, 0.9735]
+pthread_mutex_lock = [0.9442, 0.7844, 0.7760, 1.1715, 2.8434, 3.8247, 4.1243]
+pthread_spin_lock = [1.0224, 0.6636, 0.7341, 0.9521, 2.1707, 4.4040, 5.8494]
+tas_lock = [1.0113, 0.6697, 0.6930, 1.2048, 4.6646, 9.8164, 9.6703]
+ttas_lock = [1.0216, 0.6707, 0.6986, 0.9158, 2.1230, 4.4573, 6.9949]
+array_lock = [1.0709, 0.6752, 0.5335, 0.5738, 1.4030, 2.3027, 1.9873]
+clh_lock = [1.0174, 0.6723, 0.5017, 0.5196, 1.1377, 1.7519, 1.2688]
+pragma_omp_critical = [1.0242, 0.7286, 0.6216, 0.8733, 4.3255, 8.1650, 6.1597]
+
+# Plotting
+plt.figure(figsize=(10, 6))
+
+plt.plot(cores, nosync_lock, marker='o', label='nosync_lock')
+plt.plot(cores, pthread_mutex_lock, marker='o', label='pthread_mutex_lock')
+plt.plot(cores, pthread_spin_lock, marker='o', label='pthread_spin_lock')
+plt.plot(cores, tas_lock, marker='o', label='tas_lock')
+plt.plot(cores, ttas_lock, marker='o', label='ttas_lock')
+plt.plot(cores, array_lock, marker='o', label='array_lock')
+plt.plot(cores, clh_lock, marker='o', label='clh_lock')
+plt.plot(cores, pragma_omp_critical, marker='o', label='pragma_omp_critical')
+
+# Add labels and title
+plt.xlabel('Number of Cores')
+plt.ylabel('Execution Time (s)')
+plt.title('Execution Time vs. Number of Cores for Different Locks')
+plt.legend()
+plt.grid(True)
+
+# Show the plot
+plt.show()
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Data
+cores = [1, 2, 4, 8, 16, 32, 64]
+nosync_lock = [0.9959, 0.6030, 0.3614, 0.2887, 0.7271, 1.1632, 0.9735]
+pthread_mutex_lock = [0.9442, 0.7844, 0.7760, 1.1715, 2.8434, 3.8247, 4.1243]
+pthread_spin_lock = [1.0224, 0.6636, 0.7341, 0.9521, 2.1707, 4.4040, 5.8494]
+tas_lock = [1.0113, 0.6697, 0.6930, 1.2048, 4.6646, 9.8164, 9.6703]
+ttas_lock = [1.0216, 0.6707, 0.6986, 0.9158, 2.1230, 4.4573, 6.9949]
+array_lock = [1.0709, 0.6752, 0.5335, 0.5738, 1.4030, 2.3027, 1.9873]
+clh_lock = [1.0174, 0.6723, 0.5017, 0.5196, 1.1377, 1.7519, 1.2688]
+pragma_omp_critical = [1.0242, 0.7286, 0.6216, 0.8733, 4.3255, 8.1650, 6.1597]
+
+# Calculate speedup for each array
+nosync_speedup = np.array(nosync_lock) / nosync_lock[0]
+pthread_mutex_speedup = np.array(pthread_mutex_lock) / pthread_mutex_lock[0]
+pthread_spin_speedup = np.array(pthread_spin_lock) / pthread_spin_lock[0]
+tas_speedup = np.array(tas_lock) / tas_lock[0]
+ttas_speedup = np.array(ttas_lock) / ttas_lock[0]
+array_speedup = np.array(array_lock) / array_lock[0]
+clh_speedup = np.array(clh_lock) / clh_lock[0]
+pragma_omp_critical_speedup = np.array(pragma_omp_critical) / pragma_omp_critical[0]
+
+# Plotting
+plt.figure(figsize=(10, 6))
+
+plt.plot(cores, nosync_speedup, marker='o', label='nosync_lock')
+plt.plot(cores, pthread_mutex_speedup, marker='o', label='pthread_mutex_lock')
+plt.plot(cores, pthread_spin_speedup, marker='o', label='pthread_spin_lock')
+plt.plot(cores, tas_speedup, marker='o', label='tas_lock')
+plt.plot(cores, ttas_speedup, marker='o', label='ttas_lock')
+plt.plot(cores, array_speedup, marker='o', label='array_lock')
+plt.plot(cores, clh_speedup, marker='o', label='clh_lock')
+plt.plot(cores, pragma_omp_critical_speedup, marker='o', label='pragma_omp_critical')
+
+# Add labels and title
+plt.xlabel('Number of Cores')
+plt.ylabel('Speedup')
+plt.title('Speedup vs. Number of Cores for Different Locks')
+plt.legend()
+plt.grid(True)
+
+# Show the plot
+plt.show()
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Data
+cores = [1, 2, 4, 8, 16, 32, 64]
+nosync_lock = [0.9959, 0.6030, 0.3614, 0.2887, 0.7271, 1.1632, 0.9735]
+pthread_mutex_lock = [0.9442, 0.7844, 0.7760, 1.1715, 2.8434, 3.8247, 4.1243]
+pthread_spin_lock = [1.0224, 0.6636, 0.7341, 0.9521, 2.1707, 4.4040, 5.8494]
+tas_lock = [1.0113, 0.6697, 0.6930, 1.2048, 4.6646, 9.8164, 9.6703]
+ttas_lock = [1.0216, 0.6707, 0.6986, 0.9158, 2.1230, 4.4573, 6.9949]
+array_lock = [1.0709, 0.6752, 0.5335, 0.5738, 1.4030, 2.3027, 1.9873]
+clh_lock = [1.0174, 0.6723, 0.5017, 0.5196, 1.1377, 1.7519, 1.2688]
+pragma_omp_critical = [1.0242, 0.7286, 0.6216, 0.8733, 4.3255, 8.1650, 6.1597]
+
+# Calculate speedup for each array
+nosync_speedup = np.array(nosync_lock) / nosync_lock[0]
+pthread_mutex_speedup = np.array(pthread_mutex_lock) / pthread_mutex_lock[0]
+pthread_spin_speedup = np.array(pthread_spin_lock) / pthread_spin_lock[0]
+tas_speedup = np.array(tas_lock) / tas_lock[0]
+ttas_speedup = np.array(ttas_lock) / ttas_lock[0]
+array_speedup = np.array(array_lock) / array_lock[0]
+clh_speedup = np.array(clh_lock) / clh_lock[0]
+pragma_omp_critical_speedup = np.array(pragma_omp_critical) / pragma_omp_critical[0]
+
+# Print the speedup arrays
+print("nosync_speedup:", nosync_speedup)
+print("pthread_mutex_speedup:", pthread_mutex_speedup)
+print("pthread_spin_speedup:", pthread_spin_speedup)
+print("tas_speedup:", tas_speedup)
+print("ttas_speedup:", ttas_speedup)
+print("array_speedup:", array_speedup)
+print("clh_speedup:", clh_speedup)
+print("pragma_omp_critical_speedup:", pragma_omp_critical_speedup)
+
+# Plotting
+plt.figure(figsize=(10, 6))
+
+plt.plot(cores, nosync_speedup, marker='o', label='nosync_lock')
+plt.plot(cores, pthread_mutex_speedup, marker='o', label='pthread_mutex_lock')
+plt.plot(cores, pthread_spin_speedup, marker='o', label='pthread_spin_lock')
+plt.plot(cores, tas_speedup, marker='o', label='tas_lock')
+plt.plot(cores, ttas_speedup, marker='o', label='ttas_lock')
+plt.plot(cores, array_speedup, marker='o', label='array_lock')
+plt.plot(cores, clh_speedup, marker='o', label='clh_lock')
+plt.plot(cores, pragma_omp_critical_speedup, marker='o', label='pragma_omp_critical')
+
+# Add labels and title
+plt.xlabel('Number of Cores')
+plt.ylabel('Speedup')
+plt.title('Speedup vs. Number of Cores for Different Locks')
+plt.legend()
+plt.grid(True)
+
+# Show the plot
+plt.show()
